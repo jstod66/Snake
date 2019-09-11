@@ -29,9 +29,15 @@ class Snake(Rectangle):
         dy = SCALE*self.speed[1]
         x = self.getCenter().getX()
         y = self.getCenter().getY()
+
+        canMove = False
+        
         if( ((x+dx) > 0) & ((x+dx) < WIDTH)):
             if(((y+dy) > 0) & ((y+dy) < WIDTH)):
                 self.move(dx,dy)
+                canMove = True
+
+        return canMove
         
 class Food(Rectangle):
 
