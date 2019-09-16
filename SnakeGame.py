@@ -7,10 +7,12 @@ from checkCollision import *
 def main():
 	
     GRID_SIZE = 20
-    MS_PER_FRAME = 90
+    MS_PER_FRAME = 100
     SCALE = 20
     HEIGHT = GRID_SIZE*SCALE
     WIDTH = HEIGHT
+
+    Score = 0
 
     win = GraphWin("Snake Game", WIDTH,HEIGHT)
     win.setBackground(color_rgb(0,0,0))
@@ -66,6 +68,7 @@ def main():
         #Check if food has been eaten, and initialise protocols if so
         Eaten = f.checkEat(s,SCALE)
         if(Eaten):
+            s.scoreUp()
             del f
             #Fix later to stop food spawning in cells occupied by snake/tail
             fx = random.randint(0,GRID_SIZE-1)
@@ -76,6 +79,7 @@ def main():
 
         #Simple Reset Functionality
         if(( not canMove)|(Collided)):
+            Score = s.score
             s.undraw()
             del s
             f.undraw()
@@ -85,7 +89,7 @@ def main():
             del Tail
             FPS.undraw()
 
-            Exit = ResetScreen(win,WIDTH)
+            Exit = ResetScreen(win,WIDTH,Score)
             if(Exit):
                 break
             
@@ -102,9 +106,9 @@ def main():
         
     win.close()  
 
-def ResetScreen(win,WIDTH):
+def ResetScreen(win,WIDTH,Score):
 
-    ResetMessage = Text(Point(WIDTH/2,WIDTH/2),"YOU DIED! \n PRESS 'r' TO RESET OR 'x' TO EXIT")
+    ResetMessage = Text(Point(WIDTH/2,WIDTH/2),"YOU DIED! \n YOUR SCORE WAS %d \n PRESS 'r' TO RESET OR 'x' TO EXIT" %Score)
     ResetMessage.setSize(16)
     ResetMessage.setTextColor('white')
     ResetMessage.draw(win) 

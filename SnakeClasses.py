@@ -4,12 +4,16 @@ import math
 class Snake(Rectangle):
 
     speed = [1,0];
+    score = 0;
 
     def __init__(self,point1,point2,win):
         self.speed = [1,0];
         Rectangle.__init__(self,point1,point2)
         self.setFill('white')
         self.draw(win)
+
+    def scoreUp(self):
+        self.score += 1
 
     def update(self,win,lastKeyPress,SCALE,WIDTH):
         if(lastKeyPress=='s'):  
